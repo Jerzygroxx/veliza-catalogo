@@ -2,7 +2,7 @@ import config from '@payload-config'
 import { getPayload, type Payload } from 'payload'
 import sharp from 'sharp'
 import { beforeAll, describe, expect, it } from 'vitest'
-import { createTestImage, NO_REVALIDATE } from './helpers'
+import { createTestImage, NO_REVALIDATE, RUN } from './helpers'
 
 let payload: Payload
 
@@ -24,6 +24,26 @@ describe('configuración del panel', () => {
     const auth = payload.collections.users.config.auth
     expect(auth.maxLoginAttempts).toBe(5)
     expect(auth.lockTime).toBe(10 * 60 * 1000)
+  })
+})
+
+describe('contraseñas', () => {
+  it(`rechaza contraseñas de menos de 12 caracteres`, async () => {
+    await expect(
+      payload.create({
+        collection: 'users',
+        data: { email: `corta-${RUN}@example.com`, password: '123456' },
+        context: NO_REVALIDATE,
+      }),
+    ).rejects.toThrow(/12 caracteres/)
+  })
+  it('acepta una contraseña larga', async () => {
+    const user = await payload.create({
+      collection: 'users',
+      data: { email: `larga-${RUN}@example.com`, password: 'una-frase-larga-y-segura' },
+      context: NO_REVALIDATE,
+    })
+    await payload.delete({ collection: 'users', id: user.id, context: NO_REVALIDATE })
   })
 })
 
