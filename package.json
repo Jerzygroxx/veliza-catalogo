@@ -17,7 +17,9 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run tests/int",
     "test:unit": "vitest run tests/unit",
     "typecheck": "tsc --noEmit",
-    "seed": "cross-env NODE_OPTIONS=--no-deprecation payload run src/seed/index.ts"
+    "seed": "cross-env NODE_OPTIONS=--no-deprecation payload run src/seed/index.ts",
+    "seed:pages": "node scripts/extract-catalog-pages.mjs",
+    "seed:preview": "tsx scripts/preview-crops.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.90.2",
@@ -41,8 +43,9 @@
     "dotenv": "^17.4.2",
     "eslint": "^9.16.0",
     "eslint-config-next": "16.3.3",
+    "pdf-to-img": "^7.0.0",
     "prettier": "^3.4.2",
-    "tsx": "4.22.4",
+    "tsx": "^4.22.4",
     "typescript": "5.7.3",
     "vite-tsconfig-paths": "6.0.5",
     "vitest": "4.0.18"

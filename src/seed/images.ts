@@ -18,10 +18,14 @@ export function createCatalogImageLoader(assetsDir: string): ImageLoader {
   return async (product) => {
     const source = product.source
     if (!source || source.crops.length === 0) return [await placeholderImage()]
-    const file = pagePath(assetsDir, source.page)
-    if (!existsSync(file)) {
-      throw new Error(`No existe ${file}. Ejecuta primero: npm run seed:pages`)
-    }
-    return Promise.all(source.crops.map((crop) => sharp(file).extract(crop).jpeg({ quality: 88 }).toBuffer()))
+    return Promise.all(
+      source.crops.map(({ page = source.page, ...region }) => {
+        const file = pagePath(assetsDir, page)
+        if (!existsSync(file)) {
+          throw new Error(`No existe ${file}. Ejecuta primero: npm run seed:pages`)
+        }
+        return sharp(file).extract(region).jpeg({ quality: 88 }).toBuffer()
+      }),
+    )
   }
 }

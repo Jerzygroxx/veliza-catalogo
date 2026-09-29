@@ -26,6 +26,16 @@ describe('datos iniciales', () => {
       expect(Number.isInteger(p.price) && p.price >= MIN_PRICE, p.name).toBe(true)
     }
   })
+  it('cada producto tiene al menos un recorte definido', () => {
+    for (const p of products) expect(p.source?.crops.length ?? 0, p.name).toBeGreaterThan(0)
+  })
+  it('los recortes caben en las páginas del catálogo (972×1727)', () => {
+    for (const p of products) {
+      for (const c of p.source?.crops ?? []) {
+        expect(c.left + c.width <= 972 && c.top + c.height <= 1727, `${p.name} ${JSON.stringify(c)}`).toBe(true)
+      }
+    }
+  })
   it('la configuración trae WhatsApp, pasos y políticas', () => {
     expect(siteSettings.whatsappNumber).toBe('573189952081')
     expect(siteSettings.howToBuySteps).toHaveLength(4)

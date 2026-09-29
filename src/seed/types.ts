@@ -1,4 +1,5 @@
-export type Crop = { left: number; top: number; width: number; height: number }
+/** Recorte en píxeles. `page` solo si la foto está en otra página que la de su `source`. */
+export type Crop = { left: number; top: number; width: number; height: number; page?: number }
 
 export type SeedCategory = { name: string; slug: string; order: number }
 

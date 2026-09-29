@@ -31,6 +31,24 @@ describe('imágenes del seed', () => {
     const sizes = await Promise.all(buffers.map(async (b) => (await sharp(b).metadata()).width))
     expect(sizes).toEqual([400, 480])
   })
+  it('un recorte puede venir de otra página (producto repartido en dos páginas)', async () => {
+    const dir = await mkdtemp(path.join(os.tmpdir(), 'veliza-seed-'))
+    await mkdir(path.join(dir, 'pages'))
+    for (const [page, width] of [[10, 600], [11, 900]]) {
+      await sharp({ create: { width, height: 800, channels: 3, background: '#FAF9F6' } })
+        .png()
+        .toFile(pagePath(dir, page))
+    }
+    const load = createCatalogImageLoader(dir)
+    const buffers = await load({
+      name: 'Blusa manga corta',
+      category: 'blusas-y-tops',
+      price: 26000,
+      source: { page: 10, crops: [{ left: 0, top: 0, width: 500, height: 600 }, { page: 11, left: 700, top: 0, width: 150, height: 200 }] },
+    })
+    const sizes = await Promise.all(buffers.map(async (b) => (await sharp(b).metadata()).width))
+    expect(sizes).toEqual([500, 150])
+  })
   it('explica qué hacer si falta la página', async () => {
     const load = createCatalogImageLoader('no-existe')
     await expect(
