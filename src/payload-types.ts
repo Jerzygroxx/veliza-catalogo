@@ -91,8 +91,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'site-settings': SiteSetting;
+  };
+  globalsSelect: {
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -485,6 +489,84 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  /**
+   * Con indicativo de país. Puedes escribir +57 318 995 2081; se guarda solo con números.
+   */
+  whatsappNumber: string;
+  instagramUrl?: string | null;
+  tiktokUrl?: string | null;
+  priceNotice?: string | null;
+  antifraudNotice?: string | null;
+  aboutShort?: string | null;
+  /**
+   * Separa los párrafos con una línea en blanco.
+   */
+  aboutStory?: string | null;
+  mission?: string | null;
+  vision?: string | null;
+  howToBuySteps?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  deliveryOptions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  exchangePolicies?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  whatsappNumber?: T;
+  instagramUrl?: T;
+  tiktokUrl?: T;
+  priceNotice?: T;
+  antifraudNotice?: T;
+  aboutShort?: T;
+  aboutStory?: T;
+  mission?: T;
+  vision?: T;
+  howToBuySteps?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  deliveryOptions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  exchangePolicies?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

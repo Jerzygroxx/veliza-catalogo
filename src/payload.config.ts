@@ -11,6 +11,7 @@ import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Products } from './collections/Products'
 import { Users } from './collections/Users'
+import { SiteSettings } from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -33,6 +34,7 @@ export default buildConfig({
     fallbackLanguage: 'es',
   },
   collections: [Users, Media, Categories, Products],
+  globals: [SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: { outputFile: path.resolve(dirname, 'payload-types.ts') },
