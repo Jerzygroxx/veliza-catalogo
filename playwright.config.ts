@@ -16,7 +16,8 @@ export default defineConfig({
   globalTeardown: './tests/e2e/teardown.ts',
   use: { baseURL: URL, trace: 'retain-on-failure' },
   webServer: {
-    command: `npm run e2e:fixtures -- up && npm run build && npx next start -p ${PORT}`,
+    // Se borra `.next` antes del build: la caché de datos de Next sobrevive entre builds y traería la lista vieja de prendas.
+    command: `npm run e2e:fixtures -- up && node -e "require('fs').rmSync('.next',{recursive:true,force:true})" && npm run build && npx next start -p ${PORT}`,
     url: URL,
     timeout: 300_000,
     reuseExistingServer: false,

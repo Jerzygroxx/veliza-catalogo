@@ -1,4 +1,4 @@
-import config from '@payload-config'
+import config from '../src/payload.config'
 import { getPayload } from 'payload'
 import sharp from 'sharp'
 import { E2E } from '../tests/e2e/fixtures'
@@ -61,17 +61,18 @@ async function up() {
   })
 }
 
-// `payload run <archivo> <modo>` pasa el modo como último argumento.
+// `payload run` termina en cuanto el módulo se evalúa: por eso se usa await de nivel superior
+// (igual que el seed) y no una promesa suelta. El modo llega como último argumento.
 const mode = process.argv.at(-1)
-const run = mode === 'up' ? up : mode === 'down' ? down : null
-if (!run) {
+if (mode !== 'up' && mode !== 'down') {
   console.error('Uso: e2e-fixtures.ts up|down')
   process.exit(1)
 }
-run().then(
-  () => process.exit(0),
-  (e) => {
-    console.error(e)
-    process.exit(1)
-  },
-)
+try {
+  await (mode === 'up' ? up() : down())
+  console.log(`E2E fixtures: ${mode} listo`)
+  process.exit(0)
+} catch (e) {
+  console.error(e)
+  process.exit(1)
+}
