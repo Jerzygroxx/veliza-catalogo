@@ -2,7 +2,7 @@ import type { SiteSettingsSeed } from '../types'
 
 export const siteSettings: SiteSettingsSeed = {
   whatsappNumber: '573189952081',
-  // Confirmar con las dueñas: Instagram no admite tildes en los usuarios.
+  // Usuarios confirmados por las dueñas (2026-09-30), sin los parámetros de rastreo de los enlaces compartidos.
   instagramUrl: 'https://www.instagram.com/veliza_storebq',
   tiktokUrl: 'https://www.tiktok.com/@veliza_storebq',
   priceNotice: 'Los precios varían por temporada, no manejamos precios fijos.',
