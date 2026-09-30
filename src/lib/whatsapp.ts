@@ -7,14 +7,14 @@ export type ProductInquiry = {
   productUrl: string
 }
 
-export const GREETING_MESSAGE = '¡Hola Véliza! 💕 Quiero información.'
+export const GREETING_MESSAGE = '¡Hola Véliza! Quiero información.'
 
 export function buildProductMessage({ productName, color, productUrl }: Omit<ProductInquiry, 'phone'>): string {
   const name = productName.trim()
   const chosen = color?.trim()
   return chosen
-    ? `¡Hola Véliza! 💕 Me interesa: ${name}, color ${chosen}. ¿Está disponible? ${productUrl}`
-    : `¡Hola Véliza! 💕 Me interesa: ${name}. ¿Qué colores tienen disponibles? ${productUrl}`
+    ? `¡Hola Véliza! Me interesa: ${name}, color ${chosen}. ¿Está disponible? ${productUrl}`
+    : `¡Hola Véliza! Me interesa: ${name}. ¿Qué colores tienen disponibles? ${productUrl}`
 }
 
 export function buildWhatsAppLink(phone: string, message: string): string {

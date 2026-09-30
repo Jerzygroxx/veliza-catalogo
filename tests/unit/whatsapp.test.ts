@@ -16,12 +16,12 @@ function decode(url: string) {
 describe('buildProductMessage', () => {
   it('incluye el color elegido', () => {
     expect(buildProductMessage({ productName: 'Body Cloe', color: 'Negro', productUrl })).toBe(
-      `¡Hola Véliza! 💕 Me interesa: Body Cloe, color Negro. ¿Está disponible? ${productUrl}`,
+      `¡Hola Véliza! Me interesa: Body Cloe, color Negro. ¿Está disponible? ${productUrl}`,
     )
   })
   it('sin color pregunta por los colores disponibles', () => {
     expect(buildProductMessage({ productName: 'Body Cloe', productUrl })).toBe(
-      `¡Hola Véliza! 💕 Me interesa: Body Cloe. ¿Qué colores tienen disponibles? ${productUrl}`,
+      `¡Hola Véliza! Me interesa: Body Cloe. ¿Qué colores tienen disponibles? ${productUrl}`,
     )
   })
   it('un color con solo espacios cuenta como "sin color"', () => {
@@ -37,7 +37,7 @@ describe('buildWhatsAppUrl', () => {
     const { host, phone, text } = decode(url)
     expect(host).toBe('wa.me')
     expect(phone).toBe('573189952081')
-    expect(text).toBe(`¡Hola Véliza! 💕 Me interesa: Lía, color Rosado. ¿Está disponible? ${productUrl}`)
+    expect(text).toBe(`¡Hola Véliza! Me interesa: Lía, color Rosado. ¿Está disponible? ${productUrl}`)
     expect(url).toContain('%C2%BFEst') // "¿Est" codificado
   })
   it('falla si no hay número', () => {
@@ -48,6 +48,6 @@ describe('buildWhatsAppUrl', () => {
 describe('buildGreetingUrl', () => {
   it('manda el saludo genérico', () => {
     expect(decode(buildGreetingUrl('573189952081')).text).toBe(GREETING_MESSAGE)
-    expect(GREETING_MESSAGE).toBe('¡Hola Véliza! 💕 Quiero información.')
+    expect(GREETING_MESSAGE).toBe('¡Hola Véliza! Quiero información.')
   })
 })
