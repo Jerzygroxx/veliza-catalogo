@@ -1,3 +1,4 @@
+import { config as loadEnv } from 'dotenv'
 import config from '../src/payload.config'
 import { getPayload } from 'payload'
 import sharp from 'sharp'
@@ -5,9 +6,17 @@ import { E2E } from '../tests/e2e/fixtures'
 
 const NO_REVALIDATE = { disableRevalidate: true }
 
+// `payload run` carga `.env` (la base de desarrollo) si nadie fijó otra: se exige que sea la de `.env.test`.
+const testUrl = loadEnv({ path: '.env.test', processEnv: {}, quiet: true }).parsed?.DATABASE_URL
+if (!testUrl || process.env.DATABASE_URL !== testUrl) {
+  console.error('Abortado: estos fixtures solo se ejecutan contra la base `test` (DATABASE_URL de .env.test).')
+  process.exit(1)
+}
+const E2E_SLUGS = [E2E.colorProduct, E2E.soldOutProduct, E2E.plainProduct]
+
 async function down() {
   const payload = await getPayload({ config })
-  const prods = await payload.find({ collection: 'products', where: { slug: { like: 'e2e-' } }, limit: 50, depth: 0 })
+  const prods = await payload.find({ collection: 'products', where: { slug: { in: E2E_SLUGS } }, limit: 50, depth: 0 })
   const mediaIds = new Set<number>()
   for (const p of prods.docs) {
     for (const m of p.images ?? []) mediaIds.add(typeof m === 'number' ? m : m.id)

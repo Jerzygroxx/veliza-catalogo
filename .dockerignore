@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+media
+seed-assets
+.next
+node_modules
+.git
+test-results
+playwright-report

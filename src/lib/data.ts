@@ -7,21 +7,21 @@ import { CACHE_TAGS } from './cache-tags'
 const db = () => getPayload({ config })
 
 export const getSiteSettings = unstable_cache(
-  async (): Promise<SiteSetting> => (await db()).findGlobal({ slug: 'site-settings' }),
+  async (): Promise<SiteSetting> => (await db()).findGlobal({ slug: 'site-settings', overrideAccess: false }),
   ['site-settings'],
   { tags: [CACHE_TAGS.siteSettings] },
 )
 
 export const getCategories = unstable_cache(
   async (): Promise<Category[]> =>
-    (await (await db()).find({ collection: 'categories', sort: 'order', limit: 100, depth: 1 })).docs,
+    (await (await db()).find({ collection: 'categories', sort: 'order', limit: 100, depth: 1, overrideAccess: false })).docs,
   ['categories'],
   { tags: [CACHE_TAGS.categories, CACHE_TAGS.siteSettings] },
 )
 
 export const getProducts = unstable_cache(
   async (): Promise<Product[]> =>
-    (await (await db()).find({ collection: 'products', sort: '-createdAt', limit: 500, depth: 1 })).docs,
+    (await (await db()).find({ collection: 'products', sort: '-createdAt', limit: 500, depth: 1, overrideAccess: false })).docs,
   ['products'],
   { tags: [CACHE_TAGS.products, CACHE_TAGS.categories] },
 )

@@ -33,7 +33,7 @@ El botón «Pedir por WhatsApp» de la tienda manda a las clientas a **nuestro n
 - **Nunca** entres desde un enlace que te llegue por mensaje, correo o redes.
 - Usa una contraseña **larga y única** (mínimo 12 caracteres), guardada en un gestor de contraseñas como Bitwarden. No la repitas en otros sitios.
 - Si escribes mal la contraseña 5 veces, la cuenta se bloquea **10 minutos**. Es normal: espera y vuelve a intentar.
-- Si olvidas la contraseña, pídele a otra dueña (o a quien administra el sitio) que la restablezca desde el panel.
+- Si olvidas la contraseña, escribe a quien administra el sitio: la restablece por ti. **Otra dueña no puede cambiarla**: es a propósito, para que una cuenta robada no pueda tomar las demás. Sí puede **desbloquear** tu cuenta si se bloqueó por intentos.
 
 ## 5. Si algo sale mal
 

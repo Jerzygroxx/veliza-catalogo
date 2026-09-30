@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { clientKey, createRateLimiter } from '../../src/lib/rate-limit'
+import { clientKey, createRateLimiter, parseTrustedProxy } from '../../src/lib/rate-limit'
 
 const headers = (o: Record<string, string>) => ({ get: (n: string) => o[n.toLowerCase()] ?? null })
 
@@ -40,14 +40,40 @@ describe('createRateLimiter', () => {
   })
 })
 
-describe('clientKey', () => {
-  it('prefiere cf-connecting-ip', () => {
-    expect(clientKey(headers({ 'cf-connecting-ip': '1.1.1.1', 'x-forwarded-for': '2.2.2.2' }))).toBe('1.1.1.1')
+describe('clientKey con proxy de confianza', () => {
+  it('sin proxy de confianza ignora las cabeceras de IP (no se pueden falsificar)', () => {
+    expect(clientKey(headers({ 'cf-connecting-ip': '1.1.1.1', 'x-forwarded-for': '2.2.2.2' }), 'none')).toBe('sin-ip')
   })
-  it('usa la primera IP de x-forwarded-for', () => {
-    expect(clientKey(headers({ 'x-forwarded-for': '2.2.2.2, 3.3.3.3' }))).toBe('2.2.2.2')
+  it('con Cloudflare solo confía en cf-connecting-ip', () => {
+    expect(clientKey(headers({ 'cf-connecting-ip': '1.1.1.1', 'x-forwarded-for': '2.2.2.2' }), 'cloudflare')).toBe('1.1.1.1')
+    expect(clientKey(headers({ 'x-forwarded-for': '2.2.2.2' }), 'cloudflare')).toBe('sin-ip')
   })
-  it('sin IP, todo el tráfico comparte un cubo', () => {
-    expect(clientKey(headers({}))).toBe('sin-ip')
+  it('con proxy genérico usa la primera IP de x-forwarded-for', () => {
+    expect(clientKey(headers({ 'x-forwarded-for': '2.2.2.2, 3.3.3.3' }), 'forwarded')).toBe('2.2.2.2')
+  })
+})
+
+describe('createRateLimiter: el tope de claves es real', () => {
+  it('nunca supera maxKeys aunque todas las claves sean recientes', () => {
+    const rl = createRateLimiter({ limit: 1, windowMs: 60_000, now: () => 0, maxKeys: 5 })
+    for (let i = 0; i < 50; i++) rl.check(`ip-${i}`)
+    expect(rl.size()).toBeLessThanOrEqual(5)
+  })
+  it('una clave expulsada vuelve a tener cupo (falla hacia permitir, no hacia crecer)', () => {
+    const rl = createRateLimiter({ limit: 1, windowMs: 60_000, now: () => 0, maxKeys: 2 })
+    rl.check('a')
+    rl.check('b')
+    rl.check('c') // expulsa a 'a'
+    expect(rl.check('a').allowed).toBe(true)
+  })
+})
+
+describe('parseTrustedProxy', () => {
+  it('reconoce los modos válidos', () => {
+    expect(parseTrustedProxy('cloudflare')).toBe('cloudflare')
+    expect(parseTrustedProxy('forwarded')).toBe('forwarded')
+  })
+  it.each([undefined, '', 'none', 'Cloudflare', 'cualquier-cosa'])('%j → none', (v) => {
+    expect(parseTrustedProxy(v)).toBe('none')
   })
 })
