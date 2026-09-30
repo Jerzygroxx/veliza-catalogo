@@ -39,7 +39,11 @@ export const Products: CollectionConfig = {
       required: true,
       label: 'Precio (COP)',
       validate: validatePrice,
-      admin: { step: 1000, description: 'En pesos, sin puntos ni signos. Ej: 35000' },
+      admin: {
+        step: 1000,
+        description: 'En pesos, sin puntos ni signos. Ej: 35000',
+        components: { Cell: '/components/admin/cells/PriceCell' },
+      },
     },
     { name: 'size', type: 'text', label: 'Talla', defaultValue: 'Talla única (S–M)' },
     {
@@ -73,14 +77,14 @@ export const Products: CollectionConfig = {
       type: 'checkbox',
       label: 'Destacado (aparece en el inicio)',
       defaultValue: false,
-      admin: { position: 'sidebar' },
+      admin: { position: 'sidebar', components: { Cell: '/components/admin/cells/YesNoCell' } },
     },
     {
       name: 'soldOut',
       type: 'checkbox',
       label: 'Agotada',
       defaultValue: false,
-      admin: { position: 'sidebar' },
+      admin: { position: 'sidebar', components: { Cell: '/components/admin/cells/YesNoCell' } },
     },
   ],
 }
