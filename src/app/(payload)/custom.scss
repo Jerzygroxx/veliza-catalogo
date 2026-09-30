@@ -1,0 +1,61 @@
+@import '@fontsource/cormorant-garamond/500.css';
+@import '@fontsource/cormorant-garamond/500-italic.css';
+@import '@fontsource/jost/300.css';
+@import '@fontsource/jost/400.css';
+@import '@fontsource/jost/500.css';
+
+html[data-theme='light'] {
+  --font-body: 'Jost', system-ui, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+
+  --theme-bg: #faf9f6;
+  --theme-input-bg: #ffffff;
+  --theme-text: #3b2a20;
+
+  --theme-elevation-0: #faf9f6;
+  --theme-elevation-50: #f4f1ea;
+  --theme-elevation-100: #efe8dc;
+  --theme-elevation-150: #e6dac8;
+  --theme-elevation-200: #dccdb9;
+  --theme-elevation-250: #cbb9a4;
+  --theme-elevation-400: #a48d78;
+  --theme-elevation-500: #8c7763;
+  --theme-elevation-600: #6b5646;
+  --theme-elevation-800: #3b2a20;
+  --theme-elevation-900: #2e2019;
+  --theme-elevation-1000: #1f1510;
+}
+
+html[data-theme='light'] body {
+  font-weight: 300;
+  background: var(--theme-bg);
+}
+
+html[data-theme='light'] h1,
+html[data-theme='light'] h2,
+html[data-theme='light'] h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  html[data-theme='light'] {
+    .btn,
+    .nav__link,
+    .nav a,
+    .tabs-field__tab-button {
+      min-height: 44px;
+    }
+    .field-type input,
+    .field-type textarea,
+    .field-type select,
+    .react-select .rs__control {
+      min-height: 44px;
+      font-size: 16px; /* evita el zoom automático de iOS al enfocar un campo */
+    }
+    .checkbox-input__input {
+      min-width: 44px;
+      min-height: 44px;
+    }
+  }
+}

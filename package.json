@@ -22,6 +22,8 @@
     "seed:preview": "tsx scripts/preview-crops.ts"
   },
   "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.3.0",
+    "@fontsource/jost": "^5.3.0",
     "@payloadcms/db-postgres": "3.90.2",
     "@payloadcms/next": "3.90.2",
     "@payloadcms/richtext-lexical": "3.90.2",
