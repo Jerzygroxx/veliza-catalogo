@@ -2,6 +2,7 @@ import { withPayload } from '@payloadcms/next/withPayload'
 import type { NextConfig } from 'next'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { buildSecurityHeaders } from './src/lib/security-headers'
 
 const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
@@ -9,11 +10,13 @@ const dirname = path.dirname(__filename)
 const nextConfig: NextConfig = {
   output: 'standalone',
   async headers() {
+    const security = buildSecurityHeaders({
+      isDev: process.env.NODE_ENV !== 'production',
+      extraImgHosts: (process.env.SECURITY_IMG_HOSTS || '').split(','),
+    })
     return [
-      {
-        source: '/panel-veliza/:path*',
-        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
-      },
+      { source: '/:path*', headers: security },
+      { source: '/panel-veliza/:path*', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] },
     ]
   },
   images: {
