@@ -38,6 +38,52 @@ html[data-theme='light'] h3 {
   font-weight: 500;
 }
 
+/* Menú lateral: más grande, cálido y fácil de tocar */
+html[data-theme='light'] .nav {
+  background: var(--theme-elevation-50);
+  border-right: 1px solid var(--theme-elevation-150);
+
+  .nav-group { margin-bottom: 18px; }
+
+  .nav-group__label {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--theme-text);
+  }
+
+  .nav__link {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 14px;
+    margin: 2px 0;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--theme-text);
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+
+    &::before { display: none; }
+    &:hover { background: var(--theme-elevation-150); }
+    &:focus-visible { outline: 3px solid var(--theme-text); outline-offset: 2px; }
+  }
+
+  /* Payload marca la página actual con un <div> en lugar de un <a>. */
+  div.nav__link {
+    background: var(--theme-elevation-800);
+    color: #fff;
+    &:hover { background: var(--theme-elevation-800); }
+  }
+
+  .nav__log-out { min-height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme='light'] .nav .nav__link { transition: none; }
+}
+
 @media (max-width: 768px) {
   html[data-theme='light'] {
     .btn,

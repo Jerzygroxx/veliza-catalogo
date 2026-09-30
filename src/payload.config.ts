@@ -43,7 +43,8 @@ export default buildConfig({
     supportedLanguages: { es },
     fallbackLanguage: 'es',
   },
-  collections: [Users, Media, Categories, Products],
+  // El orden define el del menú lateral: primero lo que más usan (Catálogo), al final Tienda.
+  collections: [Products, Categories, Media, Users],
   globals: [SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

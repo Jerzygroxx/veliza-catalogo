@@ -67,10 +67,10 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
-    media: Media;
-    categories: Category;
     products: Product;
+    categories: Category;
+    media: Media;
+    users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,10 +78,10 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
-    categories: CategoriesSelect<false> | CategoriesSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -127,30 +127,59 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "products".
  */
-export interface User {
+export interface Product {
   id: number;
-  name?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  resetPasswordRequestedAt?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
+  name: string;
+  /**
+   * Se genera solo a partir del nombre. Ej: "Body Cloe" → body-cloe.
+   */
+  slug: string;
+  category: number | Category;
+  /**
+   * En pesos, sin puntos ni signos. Ej: 35000
+   */
+  price: number;
+  size?: string | null;
+  colors?:
     | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
+        name: string;
+        /**
+         * Código de color. Ej: #000000 para negro.
+         */
+        swatch?: string | null;
+        id?: string | null;
       }[]
     | null;
-  password?: string | null;
-  collection: 'users';
+  /**
+   * La primera es la portada. Arrastra para cambiar el orden.
+   */
+  images: (number | Media)[];
+  description?: string | null;
+  featured?: boolean | null;
+  soldOut?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: number;
+  name: string;
+  /**
+   * Se genera solo a partir del nombre. Ej: "Body Cloe" → body-cloe.
+   */
+  slug: string;
+  image?: (number | null) | Media;
+  /**
+   * Se muestran de menor a mayor.
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -202,59 +231,30 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
+ * via the `definition` "users".
  */
-export interface Category {
+export interface User {
   id: number;
-  name: string;
-  /**
-   * Se genera solo a partir del nombre. Ej: "Body Cloe" → body-cloe.
-   */
-  slug: string;
-  image?: (number | null) | Media;
-  /**
-   * Se muestran de menor a mayor.
-   */
-  order?: number | null;
+  name?: string | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products".
- */
-export interface Product {
-  id: number;
-  name: string;
-  /**
-   * Se genera solo a partir del nombre. Ej: "Body Cloe" → body-cloe.
-   */
-  slug: string;
-  category: number | Category;
-  /**
-   * En pesos, sin puntos ni signos. Ej: 35000
-   */
-  price: number;
-  size?: string | null;
-  colors?:
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
     | {
-        name: string;
-        /**
-         * Código de color. Ej: #000000 para negro.
-         */
-        swatch?: string | null;
-        id?: string | null;
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
       }[]
     | null;
-  /**
-   * La primera es la portada. Arrastra para cambiar el orden.
-   */
-  images: (number | Media)[];
-  description?: string | null;
-  featured?: boolean | null;
-  soldOut?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
+  password?: string | null;
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -281,20 +281,20 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: number | Media;
+        relationTo: 'products';
+        value: number | Product;
       } | null)
     | ({
         relationTo: 'categories';
         value: number | Category;
       } | null)
     | ({
-        relationTo: 'products';
-        value: number | Product;
+        relationTo: 'media';
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -340,27 +340,39 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
+ * via the `definition` "products_select".
  */
-export interface UsersSelect<T extends boolean = true> {
+export interface ProductsSelect<T extends boolean = true> {
   name?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  resetPasswordRequestedAt?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
+  slug?: T;
+  category?: T;
+  price?: T;
+  size?: T;
+  colors?:
     | T
     | {
+        name?: T;
+        swatch?: T;
         id?: T;
-        createdAt?: T;
-        expiresAt?: T;
       };
+  images?: T;
+  description?: T;
+  featured?: T;
+  soldOut?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  image?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -416,39 +428,27 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories_select".
+ * via the `definition` "users_select".
  */
-export interface CategoriesSelect<T extends boolean = true> {
+export interface UsersSelect<T extends boolean = true> {
   name?: T;
-  slug?: T;
-  image?: T;
-  order?: T;
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products_select".
- */
-export interface ProductsSelect<T extends boolean = true> {
-  name?: T;
-  slug?: T;
-  category?: T;
-  price?: T;
-  size?: T;
-  colors?:
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  resetPasswordRequestedAt?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
     | T
     | {
-        name?: T;
-        swatch?: T;
         id?: T;
+        createdAt?: T;
+        expiresAt?: T;
       };
-  images?: T;
-  description?: T;
-  featured?: T;
-  soldOut?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
