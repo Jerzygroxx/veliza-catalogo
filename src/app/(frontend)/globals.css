@@ -5,7 +5,8 @@
   --color-superficie: #f4f1ea;
   --color-crema: #e6dac8;
   --color-arena: #cbb9a4;
-  --color-roca: #a48d78;
+  --color-roca: #a48d78; /* solo decoración e iconos */
+  --color-roca-fuerte: #8c7763; /* para texto grande: ≈4:1 sobre fondo y superficie */
   --color-texto: #3b2a20;
   --color-texto-suave: #6b5646;
 

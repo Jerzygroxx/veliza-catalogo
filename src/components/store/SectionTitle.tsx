@@ -5,7 +5,7 @@ export function SectionTitle({ script, children }: { script?: string; children: 
   return (
     <div className="mb-8 text-center">
       {script && (
-        <p className="font-script text-3xl text-roca" aria-hidden="true">
+        <p className="font-script text-3xl text-roca-fuerte" aria-hidden="true">
           {script}
         </p>
       )}

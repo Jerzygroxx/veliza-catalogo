@@ -21,7 +21,7 @@ export default async function AboutPage() {
         <div className="mt-16 grid gap-10 md:grid-cols-2">
           {s.mission && (
             <section>
-              <p className="font-script text-3xl text-roca" aria-hidden="true">
+              <p className="font-script text-3xl text-roca-fuerte" aria-hidden="true">
                 Misión
               </p>
               <h2 className="font-serif text-2xl">Nuestra misión</h2>
@@ -30,7 +30,7 @@ export default async function AboutPage() {
           )}
           {s.vision && (
             <section>
-              <p className="font-script text-3xl text-roca" aria-hidden="true">
+              <p className="font-script text-3xl text-roca-fuerte" aria-hidden="true">
                 Visión
               </p>
               <h2 className="font-serif text-2xl">Nuestra visión</h2>

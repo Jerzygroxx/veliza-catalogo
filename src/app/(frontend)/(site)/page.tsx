@@ -28,7 +28,7 @@ export default async function HomePage() {
   return (
     <>
       <section className="bg-superficie px-4 py-20 text-center">
-        <p className="font-script text-4xl text-roca" aria-hidden="true">
+        <p className="font-script text-4xl text-roca-fuerte" aria-hidden="true">
           con mucho amor
         </p>
         <h1 className="mt-2 font-serif text-6xl md:text-8xl">Véliza</h1>
@@ -96,7 +96,7 @@ export default async function HomePage() {
           <ol className="grid gap-6 md:grid-cols-4">
             {steps.map((s, i) => (
               <li key={s.id ?? i} className="text-center">
-                <span className="font-serif text-5xl text-roca" aria-hidden="true">
+                <span className="font-serif text-5xl text-roca-fuerte" aria-hidden="true">
                   {i + 1}
                 </span>
                 <p className="mt-2">{s.text}</p>
