@@ -14,7 +14,8 @@ const textList = (name: string, label: string, singular: string, plural: string)
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
-  label: 'Configuración del sitio',
+  label: 'Datos de la tienda',
+  admin: { group: 'Tienda' },
   access: { read: anyone, update: authenticated },
   hooks: { afterChange: [revalidateGlobalAfterChange([CACHE_TAGS.siteSettings])] },
   fields: [

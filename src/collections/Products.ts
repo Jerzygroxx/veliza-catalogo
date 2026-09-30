@@ -9,8 +9,9 @@ const tags = [CACHE_TAGS.products] as const
 
 export const Products: CollectionConfig = {
   slug: 'products',
-  labels: { singular: 'Producto', plural: 'Productos' },
+  labels: { singular: 'Prenda', plural: 'Prendas' },
   admin: {
+    group: 'Catálogo',
     useAsTitle: 'name',
     defaultColumns: ['name', 'category', 'price', 'soldOut', 'featured'],
     listSearchableFields: ['name'],

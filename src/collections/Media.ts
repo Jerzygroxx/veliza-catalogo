@@ -5,7 +5,8 @@ const webp = { format: 'webp' as const, options: { quality: 82 } }
 
 export const Media: CollectionConfig = {
   slug: 'media',
-  labels: { singular: 'Imagen', plural: 'Imágenes' },
+  labels: { singular: 'Foto', plural: 'Fotos' },
+  admin: { group: 'Catálogo' },
   access: {
     read: anyone,
     create: authenticated,

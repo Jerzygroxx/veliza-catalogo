@@ -10,7 +10,7 @@ const tags = [CACHE_TAGS.categories, CACHE_TAGS.products] as const
 export const Categories: CollectionConfig = {
   slug: 'categories',
   labels: { singular: 'Categoría', plural: 'Categorías' },
-  admin: { useAsTitle: 'name', defaultColumns: ['name', 'order', 'updatedAt'] },
+  admin: { group: 'Catálogo', useAsTitle: 'name', defaultColumns: ['name', 'order', 'updatedAt'] },
   defaultSort: 'order',
   access: { read: anyone, create: authenticated, update: authenticated, delete: authenticated },
   hooks: {

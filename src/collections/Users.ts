@@ -5,7 +5,7 @@ import { sessionCookies, validatePasswordLength } from '../lib/auth-policy'
 export const Users: CollectionConfig = {
   slug: 'users',
   labels: { singular: 'Usuaria', plural: 'Usuarias' },
-  admin: { useAsTitle: 'email', defaultColumns: ['name', 'email'] },
+  admin: { group: 'Tienda', useAsTitle: 'email', defaultColumns: ['name', 'email'] },
   auth: {
     maxLoginAttempts: 5,
     lockTime: 10 * 60 * 1000,

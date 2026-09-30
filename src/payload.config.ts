@@ -22,6 +22,7 @@ export default buildConfig({
   serverURL,
   admin: {
     user: Users.slug,
+    theme: 'light',
     importMap: {
       baseDir: path.resolve(dirname),
       importMapFile: path.resolve(dirname, 'app/(payload)/panel-veliza/importMap.js'),

@@ -120,3 +120,25 @@ describe('usuarias: solo editan su propia cuenta', () => {
     }
   })
 })
+
+describe('panel: lenguaje sencillo', () => {
+  it('usa las etiquetas de las dueñas sin cambiar los slugs', () => {
+    const { collections, globals } = payload.config
+    const bySlug = (s: string) => collections.find((c) => c.slug === s)!
+    expect(bySlug('products').labels).toEqual({ singular: 'Prenda', plural: 'Prendas' })
+    expect(bySlug('media').labels).toEqual({ singular: 'Foto', plural: 'Fotos' })
+    expect(globals.find((g) => g.slug === 'site-settings')?.label).toBe('Datos de la tienda')
+  })
+  it('agrupa el menú en Catálogo y Tienda', () => {
+    const { collections, globals } = payload.config
+    const group = (s: string) => collections.find((c) => c.slug === s)!.admin?.group
+    expect(group('products')).toBe('Catálogo')
+    expect(group('categories')).toBe('Catálogo')
+    expect(group('media')).toBe('Catálogo')
+    expect(group('users')).toBe('Tienda')
+    expect(globals.find((g) => g.slug === 'site-settings')?.admin?.group).toBe('Tienda')
+  })
+  it('fija el tema claro', () => {
+    expect(payload.config.admin.theme).toBe('light')
+  })
+})
