@@ -88,3 +88,35 @@ describe('subida de imágenes', () => {
     await payload.delete({ collection: 'media', id: doc.id, context: NO_REVALIDATE })
   })
 })
+
+describe('usuarias: solo editan su propia cuenta', () => {
+  it('no puede editar ni borrar a otra usuaria', async () => {
+    const mk = (n: string) =>
+      payload.create({
+        collection: 'users',
+        data: { email: `${n}-${RUN}@example.com`, password: 'una-frase-larga-y-segura' },
+        context: NO_REVALIDATE,
+      })
+    const a = await mk('a')
+    const b = await mk('b')
+    try {
+      await expect(
+        payload.update({ collection: 'users', id: b.id, data: { name: 'x' }, user: a, overrideAccess: false }),
+      ).rejects.toThrow()
+      await expect(
+        payload.delete({ collection: 'users', id: b.id, user: a, overrideAccess: false }),
+      ).rejects.toThrow()
+      const own = await payload.update({
+        collection: 'users',
+        id: a.id,
+        data: { name: 'yo' },
+        user: a,
+        overrideAccess: false,
+      })
+      expect(own.name).toBe('yo')
+    } finally {
+      await payload.delete({ collection: 'users', id: a.id, context: NO_REVALIDATE })
+      await payload.delete({ collection: 'users', id: b.id, context: NO_REVALIDATE })
+    }
+  })
+})

@@ -1,5 +1,5 @@
 import { APIError, type CollectionConfig } from 'payload'
-import { authenticated } from '../access'
+import { authenticated, ownAccount } from '../access'
 import { sessionCookies, validatePasswordLength } from '../lib/auth-policy'
 
 export const Users: CollectionConfig = {
@@ -14,8 +14,8 @@ export const Users: CollectionConfig = {
   access: {
     read: authenticated,
     create: authenticated,
-    update: authenticated,
-    delete: authenticated,
+    update: ownAccount,
+    delete: ownAccount,
   },
   hooks: {
     beforeValidate: [
