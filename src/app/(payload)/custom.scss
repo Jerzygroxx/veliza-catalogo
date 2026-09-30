@@ -103,5 +103,49 @@ html[data-theme='light'] .nav {
       min-width: 44px;
       min-height: 44px;
     }
+
+    /* Controles de la cabecera y del menú: iconos pequeños por defecto. */
+    .nav-toggler,
+    .app-header__account,
+    .nav__mobile-close,
+    .nav__log-out {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      min-height: 44px;
+    }
+    .nav-group__toggle {
+      min-height: 44px;
+      align-items: center;
+    }
+    .search-filter__input,
+    .list-controls__buttons .pill,
+    .pill--has-action {
+      min-height: 44px;
+    }
+    .table td a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+    }
+    .array-field__header-action,
+    .collapsible__toggle,
+    .popup-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+    }
+    .popup-button {
+      min-width: 44px;
+    }
+    .step-nav__home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      min-height: 44px;
+    }
   }
 }
