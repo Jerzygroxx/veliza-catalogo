@@ -21,7 +21,8 @@
     "seed:pages": "node scripts/extract-catalog-pages.mjs",
     "seed:preview": "tsx scripts/preview-crops.ts",
     "test:e2e": "playwright test",
-    "e2e:fixtures": "cross-env NODE_OPTIONS=--no-deprecation payload run scripts/e2e-fixtures.ts"
+    "e2e:fixtures": "cross-env NODE_OPTIONS=--no-deprecation payload run scripts/e2e-fixtures.ts",
+    "audit": "npm audit --omit=dev"
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",
@@ -35,7 +36,7 @@
     "@tailwindcss/postcss": "^4.3.3",
     "cross-env": "^7.0.3",
     "graphql": "^16.8.1",
-    "next": "16.3.3",
+    "next": "^16.3.8",
     "payload": "3.90.2",
     "postcss": "^8.5.28",
     "react": "19.2.6",
@@ -51,7 +52,7 @@
     "@types/react-dom": "19.2.3",
     "dotenv": "^17.4.2",
     "eslint": "^9.16.0",
-    "eslint-config-next": "16.3.3",
+    "eslint-config-next": "^16.3.8",
     "pdf-to-img": "^7.0.0",
     "prettier": "^3.4.2",
     "tsx": "^4.22.4",
@@ -61,5 +62,10 @@
   },
   "engines": {
     "node": "^18.20.2 || >=20.9.0"
+  },
+  "overrides": {
+    "payload": {
+      "undici": "7.30.0"
+    }
   }
 }
