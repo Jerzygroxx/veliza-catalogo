@@ -1,8 +1,3 @@
 export default function HomePage() {
-  return (
-    <main style={{ fontFamily: 'serif', padding: '4rem 1rem', textAlign: 'center' }}>
-      <h1>Véliza</h1>
-      <p>Muy pronto, nuestro catálogo 💕</p>
-    </main>
-  )
+  return <main className="p-16 text-center font-serif text-4xl">Véliza</main>
 }

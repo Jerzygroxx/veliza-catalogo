@@ -1,0 +1,54 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-fondo: #faf9f6;
+  --color-superficie: #f4f1ea;
+  --color-crema: #e6dac8;
+  --color-arena: #cbb9a4;
+  --color-roca: #a48d78;
+  --color-texto: #3b2a20;
+  --color-texto-suave: #6b5646;
+
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-script: var(--font-great-vibes), cursive;
+  --font-sans: var(--font-jost), system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    background: var(--color-fondo);
+    color: var(--color-texto);
+  }
+  body {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-texto);
+    outline-offset: 3px;
+  }
+}
+
+/* Aparición suave al hacer scroll: solo CSS, y solo si el navegador lo soporta. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+    @keyframes reveal-up {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+}
