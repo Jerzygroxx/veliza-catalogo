@@ -28,6 +28,15 @@ export default buildConfig({
       importMapFile: path.resolve(dirname, 'app/(payload)/panel-veliza/importMap.js'),
     },
     meta: { titleSuffix: ' · Véliza' },
+    components: {
+      graphics: {
+        Logo: '/components/admin/Logo',
+        Icon: '/components/admin/Icon',
+      },
+      views: {
+        dashboard: { Component: '/components/admin/Dashboard' },
+      },
+    },
   },
   routes: { admin: '/panel-veliza' },
   i18n: {

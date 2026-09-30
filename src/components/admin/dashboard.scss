@@ -1,0 +1,49 @@
+.veliza-home {
+  max-width: 880px;
+  padding: 8px 0 48px;
+
+  &__title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(2rem, 6vw, 2.75rem);
+    font-weight: 500;
+    margin: 0 0 4px;
+  }
+  &__lead { margin: 0 0 24px; color: var(--theme-elevation-600); }
+
+  &__actions { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+  &__card {
+    display: flex; flex-direction: column; gap: 4px; justify-content: center;
+    min-height: 88px; padding: 16px 20px; border-radius: 16px;
+    background: var(--theme-elevation-50); color: var(--theme-text);
+    border: 1px solid var(--theme-elevation-150); text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+    strong { font-size: 1.15rem; }
+    span { font-size: 0.95rem; color: var(--theme-elevation-600); }
+    &:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(59, 42, 32, 0.12); }
+    &:focus-visible { outline: 3px solid var(--theme-text); outline-offset: 2px; }
+
+    &--primary {
+      background: var(--theme-elevation-800); color: #fff;
+      span { color: rgba(255, 255, 255, 0.85); }
+    }
+  }
+
+  &__counts {
+    display: flex; flex-wrap: wrap; gap: 12px 28px; list-style: none; padding: 0; margin: 24px 0;
+    b { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.8rem; margin-right: 6px; }
+  }
+
+  &__help {
+    margin-top: 16px;
+    h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.5rem; }
+    details { border-top: 1px solid var(--theme-elevation-150); padding: 4px 0; }
+    summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: 500; }
+    ol { margin: 4px 0 12px; padding-left: 1.4rem; line-height: 1.6; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .veliza-home__card { transition: none; &:hover { transform: none; } }
+}
